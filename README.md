@@ -1,81 +1,206 @@
 # CanaryWatch
 
-> Personal Intrusion Detection System (IDS) for Windows using canary files, activity monitoring, and real-time alerts.
+> Advanced Personal Intrusion Detection System (IDS) and Digital Tripwire Framework for Windows
 
-CanaryWatch is a lightweight defensive security tool that helps detect unauthorized access and suspicious activity on Windows systems. By deploying digital tripwires ("canaries"), monitoring sensitive files and folders, and watching for system events, CanaryWatch provides immediate visibility into potential intrusions.
+CanaryWatch is a defensive cybersecurity tool designed to detect unauthorized access, suspicious activity, and early indicators of compromise on Windows systems.
 
-Whether you're a security enthusiast, system administrator, or privacy-conscious user, CanaryWatch helps you know when someone interacts with files, devices, or processes that should not normally be touched.
+By deploying canary files, monitoring sensitive assets, tracking system events, and generating real-time alerts, CanaryWatch provides defenders with immediate visibility into activity that should never occur under normal circumstances.
+
+Built for security enthusiasts, blue-teamers, researchers, students, and system administrators, CanaryWatch combines deception techniques with host-based monitoring in a lightweight desktop application.
 
 ---
 
 ## Features
 
-### 📄 File Canaries
-Monitor specific files and receive alerts when they are:
-- Opened
-- Accessed
-- Modified
+### Dashboard & Analytics
 
-Perfect for monitoring sensitive documents or decoy files.
+* Real-time monitoring dashboard
+* Active canary statistics
+* Alert activity visualization
+* Alert severity tracking
+* System uptime monitoring
+* Alert breakdown by category
 
-### 📁 Folder Canaries
-Watch entire directories and detect:
-- File creation
-- Modification
-- Deletion
-- General activity
+---
 
-### 🎣 Decoy (Honey) Files
-Quickly deploy fake assets designed to attract attention:
+### File Canary Monitoring
 
-- Fake passwords file
-- Fake private key file
-- Fake configuration file
+Monitor individual files and receive alerts when they are:
 
-If someone accesses these files, you'll know immediately.
+* Opened
+* Accessed
+* Modified
 
-### 🔌 USB Device Monitoring
-Detect when removable USB storage devices are connected to the system.
+Ideal for:
 
-### 📸 Screenshot Detection
-Alert when the Print Screen key is pressed.
+* Sensitive documents
+* Decoy credentials
+* Research files
+* Administrative data
 
-### ⚙️ Process Monitoring
-Monitor selected processes and receive alerts when they launch.
+---
+
+### Folder Canary Monitoring
+
+Monitor entire directories for:
+
+* File creation
+* File modification
+* File deletion
+* General filesystem activity
+
+Useful for:
+
+* Shared folders
+* Sensitive project directories
+* Administrative workspaces
+
+---
+
+### Deception & Honey Files
+
+Deploy realistic decoy assets designed to attract attackers:
+
+* Fake passwords.txt
+* Fake SSH private key
+* Fake configuration file
+* Fake AWS credentials
+
+If an attacker interacts with these assets, CanaryWatch immediately generates an alert.
+
+---
+
+### USB Device Monitoring
+
+Detect:
+
+* Removable storage insertion
+* New USB drive activity
+
+Useful for detecting:
+
+* Unauthorized storage devices
+* Data exfiltration attempts
+* Physical intrusion events
+
+---
+
+### Screenshot Detection
+
+Detect Print Screen key activity and receive alerts when screenshots may be taken.
+
+---
+
+### Process Monitoring
+
+Monitor high-risk tools and receive alerts when they launch.
 
 Examples:
-- taskmgr.exe
-- regedit.exe
-- cmd.exe
-- powershell.exe
 
-### 🔐 Login Monitoring
-Detect new Windows login events using Security Event Logs.
+* taskmgr.exe
+* regedit.exe
+* cmd.exe
+* powershell.exe
+* custom user-defined processes
 
-### 🚨 Multi-Channel Alerting
+---
+
+### Login Monitoring
+
+Monitor Windows authentication events and detect:
+
+* New logins
+* Suspicious access activity
+* Security log events
+
+---
+
+### Network Canary
+
+Monitor selected ports and generate alerts when unexpected network connections appear.
+
+Example watch ports:
+
+* 22 (SSH)
+* 3389 (RDP)
+* 5900 (VNC)
+* 4444 (Common reverse shell port)
+
+---
+
+### Registry Canary
+
+Monitor Windows Registry locations for changes.
+
+Examples:
+
+* Startup persistence locations
+* Autorun keys
+* Security-sensitive registry entries
+
+---
+
+### Clipboard Canary
+
+Detect unexpected clipboard modifications and clipboard hijacking behavior.
+
+Useful for:
+
+* Cryptocurrency clipboard hijackers
+* Credential theft monitoring
+* Malware detection
+
+---
+
+### Multi-Channel Alerting
+
 Receive alerts through:
 
-- Desktop notifications
-- Email (Gmail)
-- Telegram
-- Discord Webhooks
+* Desktop popups
+* Email notifications
+* Telegram bot alerts
+* Discord webhooks
+* Optional sound notifications
 
-### 📜 Alert Logging
-Maintain a searchable history of alerts and export logs when needed.
+---
+
+### Alert Management
+
+* Severity classification (LOW / MEDIUM / HIGH)
+* Searchable alert history
+* Detailed alert inspection
+* Exportable logs
+* Local alert storage
+
+---
+
+### System Tray Operation
+
+Run silently in the background with:
+
+* Minimize-to-tray support
+* Quick restore
+* Background monitoring
 
 ---
 
 ## Screenshots
 
-Add screenshots of the UI here.
-
-### Main Dashboard
+### Dashboard
 
 ![Dashboard](screenshots/dashboard.png)
+
+### Canary Deployment
+
+![Deploy](screenshots/deploy.png)
 
 ### Alert Log
 
 ![Alerts](screenshots/alerts.png)
+
+### Configuration
+
+![Config](screenshots/config.png)
 
 ---
 
@@ -83,9 +208,9 @@ Add screenshots of the UI here.
 
 ### Requirements
 
-- Windows 10/11
-- Python 3.9+
-- Administrator privileges recommended for some monitoring features
+* Windows 10 / Windows 11
+* Python 3.9+
+* Administrator privileges recommended
 
 ### Clone Repository
 
@@ -110,15 +235,17 @@ python canarywatch.py
 
 ## Dependencies
 
-```text
+```txt
 watchdog
 requests
+pystray
+Pillow
 ```
 
-Install manually if needed:
+Install manually:
 
 ```bash
-pip install watchdog requests
+pip install watchdog requests pystray pillow
 ```
 
 ---
@@ -131,33 +258,35 @@ pip install watchdog requests
 python canarywatch.py
 ```
 
-### 2. Deploy a Canary
+### 2. Deploy Canaries
 
-Choose one of the following:
+Choose from:
 
-- File Canary
-- Folder Canary
-- USB Canary
-- Screenshot Canary
-- Process Canary
-- Login Canary
-- Fake Passwords File
-- Fake Private Key
-- Fake Config File
+* File Canary
+* Folder Canary
+* USB Canary
+* Screenshot Canary
+* Process Canary
+* Login Canary
+* Network Canary
+* Registry Canary
+* Clipboard Canary
 
-### 3. Configure Alerts
+Or deploy deception assets:
 
-Navigate to:
+* Fake Passwords File
+* Fake Private Key
+* Fake Configuration File
+* Fake AWS Credentials
 
-```
-Alert Config
-```
+### 3. Configure Alert Channels
 
 Configure:
 
-- Email notifications
-- Telegram bot alerts
-- Discord webhook alerts
+* Email
+* Telegram
+* Discord
+* Sound notifications
 
 ### 4. Arm Monitoring
 
@@ -167,42 +296,29 @@ Click:
 Arm All Canaries
 ```
 
-CanaryWatch will begin monitoring selected assets and system events.
+CanaryWatch begins monitoring immediately.
 
 ---
 
-## Alert Types
+## Architecture
 
-| Alert Type | Description |
-|------------|-------------|
-| File Canary | Monitors access and modification of specific files |
-| Folder Canary | Detects activity inside monitored directories |
-| USB Canary | Detects removable drive insertion |
-| Screenshot Canary | Detects Print Screen key presses |
-| Process Canary | Detects launch of monitored processes |
-| Login Canary | Detects Windows login events |
+CanaryWatch combines several defensive security techniques:
 
----
+* Host-based intrusion detection
+* Deception technology
+* Canary files
+* Event monitoring
+* Network monitoring
+* Registry monitoring
+* Alert correlation
 
-## Use Cases
-
-### Personal Security
-Monitor sensitive files and folders for unauthorized access.
-
-### Insider Threat Detection
-Deploy decoy files to identify curious or unauthorized users.
-
-### Workstation Monitoring
-Track activity on shared computers and administrative systems.
-
-### Honeypot-Style Detection
-Place fake credentials or configuration files where an intruder may look first.
+All monitoring occurs locally on the endpoint.
 
 ---
 
 ## Data Storage
 
-CanaryWatch stores configuration and alert history locally:
+Configuration and alert history are stored locally:
 
 ```text
 ~/.canarywatch/
@@ -210,32 +326,58 @@ CanaryWatch stores configuration and alert history locally:
 └── alerts.log
 ```
 
-No telemetry or cloud services are required.
+No telemetry is collected.
+
+No data is sent to external services unless configured for alert delivery.
 
 ---
 
-## Security Notes
+## Use Cases
 
-- CanaryWatch is intended for defensive monitoring.
-- Monitor only systems you own or are authorized to administer.
-- Some monitoring features may require elevated permissions.
-- Alert delivery services (Email, Telegram, Discord) require valid credentials and configuration.
+### Blue Team Labs
+
+Deploy canaries and observe attacker behavior.
+
+### Personal Security
+
+Monitor sensitive files and folders.
+
+### Insider Threat Detection
+
+Use decoy assets to detect unauthorized access.
+
+### Research & Education
+
+Learn host-based intrusion detection concepts.
+
+### Home Lab Monitoring
+
+Add visibility to personal Windows systems.
 
 ---
 
-## Roadmap
+## Security Notice
 
-Planned improvements include:
+CanaryWatch is designed for defensive monitoring purposes only.
 
-- System tray support
-- Native Windows notifications
-- Executable (.exe) releases
-- Alert filtering and severity levels
-- Remote dashboard
-- SIEM integration
-- File hash monitoring
-- Registry monitoring
-- Dark mode enhancements
+Always ensure you have authorization to monitor the systems on which the software is deployed.
+
+Some monitoring features may require elevated privileges depending on operating system configuration.
+
+---
+
+## Future Development
+
+Planned enhancements:
+
+* Windows executable releases
+* Digital signatures
+* SIEM integrations
+* YARA rule integration
+* File hash integrity monitoring
+* Remote alert dashboard
+* Multi-host monitoring
+* Threat intelligence enrichment
 
 ---
 
@@ -246,18 +388,20 @@ Contributions, bug reports, and feature requests are welcome.
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
-4. Submit a pull request
+4. Open a pull request
 
 ---
 
 ## Disclaimer
 
-CanaryWatch is provided for educational and defensive security purposes only.
+This software is provided for educational, research, and defensive security purposes only.
 
-The software should only be used on systems you own or have explicit authorization to monitor. The authors assume no responsibility for misuse or damages resulting from use of this software.
+The authors assume no liability for misuse, damage, or unauthorized deployment.
+
+Use responsibly and only on systems you own or are authorized to monitor.
 
 ---
 
 ## Author
 
-Built with Python for defenders, researchers, and security enthusiasts.
+Developed as a cybersecurity project focused on intrusion detection, deception technology, and defensive monitoring.
